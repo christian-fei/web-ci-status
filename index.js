@@ -9,8 +9,8 @@ var express = require('express')
   , log = bunyan.createLogger({name: 'WEB_CI_STATUS', stream: bunyanFormat({ outputMode: 'short' })})
 
 var WEB_CI_STATUS_HTTP_PORT = process.env.WEB_CI_STATUS_HTTP_PORT || 3002
-var WEBHOOK_PUBLISHER_TCP_HOST = process.env.WEBHOOK_PUBLISHER_TCP_HOST || '146.185.167.197'
-var WEBHOOK_PUBLISHER_TCP_PORT = process.env.WEBHOOK_PUBLISHER_TCP_PORT || 3001
+var WEBHOOK_PUBLISHER_HOST = process.env.WEBHOOK_PUBLISHER_HOST || '146.185.167.197'
+var WEBHOOK_PUBLISHER_PORT = process.env.WEBHOOK_PUBLISHER_PORT || 3001
 
 var app = express()
 
@@ -33,8 +33,8 @@ app.get('/', function(req, res){
 })
 
 
-tcpSocket.connect(WEBHOOK_PUBLISHER_TCP_PORT, WEBHOOK_PUBLISHER_TCP_HOST, function(){
-  log.info('TCP COMM client connected to http://localhost:%s', WEBHOOK_PUBLISHER_TCP_PORT)
+tcpSocket.connect(WEBHOOK_PUBLISHER_PORT, WEBHOOK_PUBLISHER_HOST, function(){
+  log.info('TCP COMM client connected to http://localhost:%s', WEBHOOK_PUBLISHER_PORT)
 })
 tcpSocket.on('error', function(){
   log.error('TCP client failed to connect')
